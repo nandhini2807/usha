@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking System</title>
+    <style>
+        /* styles.css */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+ 
+        h1, h2 {
+            color: #333;
+        }
+ 
+        .login-container {
+            display: inline-block;
+            margin: 20px;
+        }
+ 
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+ 
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+ 
+        button:hover {
+            background-color: #45a049;
+        }
+ 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+ 
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+ 
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Home Page -->
+    <div id="home">
+        <h1>Hotel Booking System</h1>
+        <div class="login-container">
+            <h2>User Login</h2>
+            <form id="userLoginForm">
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+                <button type="button" id="userLoginButton">Login</button>
+            </form>
+        </div>
+        <div class="login-container">
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <input type="text" id="adminUsername" placeholder="Username">
+                <input type="password" id="adminPassword" placeholder="Password">
+                <button type="button" id="adminLoginButton">Login</button>
+            </form>
+        </div>
+    </div>
+ 
+    <!-- User Dashboard -->
+    <div id="userDashboard" style="display:none;">
+        <h2>Search Hotels</h2>
+        <input type="text" id="searchHotel" placeholder="Enter location">
+        <button type="button" id="searchButton">Search</button>
+        <div id="hotelList"></div>
+        <div id="bookingForm" style="display:none;">
+            <input type="text" id="name" placeholder="Name">
+            <input type="email" id="email" placeholder="Email">
+            <input type="tel" id="phone" placeholder="Phone">
+            <input type="date" id="date">
+            <input type="number" id="days" placeholder="Number of Days">
+            <button type="button" id="confirmBooking">Confirm Booking</button>
+        </div>
+        <div id="bookingMessage"></div>
+    </div>
+ 
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" style="display:none;">
+        <h2>All Bookings</h2>
+        <table id="bookingTable">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Hotel Name</th>
+                    <th>Booking Date</th>
+                    <th>Number of Days</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Booking rows will be populated here -->
+            </tbody>
+        </table>
+        <div id="cancelMessage"></div>
+    </div>
+ 
+    <script>
+        // User login
+        document.getElementById('userLoginButton').addEventListener('click', function() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('userDashboard').style.display = 'block';
+        });
+ 
+        // Admin login
+        document.getElementById('adminLoginButton').addEventListener('click', function() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+        });
+ 
+        // Search hotels
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const hotelList = document.getElementById('hotelList');
+            hotelList.innerHTML = `
+                <div>
+                    <h3>Hotel Madurai</h3>
+                    <p>Location: Madurai</p>
+                    <p>Price per night: ₹2000</p>
+                    <button type="button" data-hotel-id="1">Book Now</button>
+                </div>
+            `;
+            hotelList.querySelector('button').addEventListener('click', function() {
+                document.getElementById('bookingForm').style.display = 'block';
+            });
+        });
+ 
+        // Confirm booking
+        document.getElementById('confirmBooking').addEventListener('click', function() {
+            document.getElementById('bookingMessage').innerText = 'Booking Successful!';
+        });
+ 
+        // Populate bookings for admin (sample data for demonstration)
+        const bookingTableBody = document.querySelector('#bookingTable tbody');
+        bookingTableBody.innerHTML = `
+            <tr>
+                <td>John Doe</td>
+                <td>Hotel Madurai</td>
+                <td>2023-05-01</td>
+                <td>3</td>
+                <td>Confirmed</td>
+                <td><button type="button" data-cancel-id="1">Cancel</button></td>
+            </tr>
+        `;
+ 
+        // Cancel booking
+        bookingTableBody.querySelector('[data-cancel-id]').addEventListener('click', function() {
+            document.getElementById('cancelMessage').innerText = 'Booking Cancelled Successfully!';
+        });
+    </script>
+</body>
+</html>
+
